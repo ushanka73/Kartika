@@ -1,4 +1,4 @@
-<section class="col-span-4">
+<section class="col-span-2 lg:col-span-4">
     <h2 class="font-bold text-[1.6rem] m-4">Jadwal hari ini</h2>
     <div class="overflow-x-auto rounded-3xl bg-white p-6 shadow-md ">
         <table class="w-full text-left text-sm">

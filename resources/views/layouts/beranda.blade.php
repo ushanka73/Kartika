@@ -8,25 +8,15 @@
     <title>Beranda</title>
 </head>
 <body>
-    <div class="flex min-h-screen">
+
+    <div class="min-h-screen lg:flex">
         @include('components.sidebar')
-        <div class="flex flex-col flex-1">
+        <div class="flex flex-col flex-1 min-w-0">
             <main class="flex flex-col">
                 @yield('dashboard')
                 @yield('profile')
-                {{-- @yield('pengelolaan') --}}
-
-
             </main>
         </div>
     </div>
-    <script>
-        const toggle = document.getElementById('menu-toggle');
-        const menu = document.getElementById('menu');
-        toggle.addEventListener('click', () => {
-            const open = menu.classList.toggle('hidden') === false;
-            toggle.setAttribute('aria-expanded', open);
-        });
-    </script>
 </body>
 </html>

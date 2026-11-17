@@ -30,9 +30,6 @@
         @include('components.jadwal')
         </section>
 
-
-        {{-- <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 h-auto">
-        </div> --}}
     </div>
     @include('components.footer')
 </main>
