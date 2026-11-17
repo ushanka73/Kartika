@@ -1,8 +1,3 @@
-{{--
-    Logo Kartika beranimasi (anime.js createDrawable).
-    Pemakaian: @include('partials.logo-kartika', ['class' => 'h-11 w-auto'])
-    Tiap huruf satu path: garisnya digambar bergantian, lalu hurufnya diisi putih.
---}}
 <svg class="logo-kartika {{ $class ?? 'h-11 w-auto' }}" viewBox="2 16 376 89" role="img" aria-label="Kartika">
     <g fill="#fff" fill-opacity="0" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
         <path class="logo-line" d="M67.8 100L46.9 100L23.3 69L23.3 100L6.2 100L6.2 29.8L23.3 29.8L23.3 60.6L46.7 29.8L66.8 29.8L39.6 64.2L67.8 100Z"/>

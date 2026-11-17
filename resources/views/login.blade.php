@@ -7,10 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Login</title>
 </head>
-<body class="overflow-x-hidden bg-zinc-900">
+<body class="overflow-x-hidden bg-red-50">
     <div class="min-h-screen flex items-center justify-center p-6 ">
         <div class="w-full max-w-[400px] md:max-w-[700px] rounded-3xl bg-rose-600 flex justify-between shadow-2xl">
-            {{-- Panel merah: logo Tut Wuri Handayani (dengan orb bergerak) di atas, logo Kartika di bawahnya. Disembunyikan di layar kecil. --}}
             <div class="p-8 hidden md:flex flex-1 flex-col items-center justify-center gap-6">
                 @include('partials.logo-tutwuri', ['class' => 'h-40 w-auto', 'color' => '#fff', 'opacity' => 1, 'dot' => 16])
                 @include('partials.logo-kartika', ['class' => 'h-12 w-auto'])
