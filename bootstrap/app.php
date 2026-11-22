@@ -12,7 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-    $middleware->alias(['role' => RoleMiddleware::class]);
+    $middleware->alias(['role' => RoleMiddleware::class,]);
+    $middleware->append(\Illuminate\Session\Middleware\StartSession::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
