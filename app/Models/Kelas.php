@@ -16,7 +16,7 @@ class Kelas extends Model
         'tahun_ajaran',
     ];
 
-    public function user(): BelongsTo
+    public function guru(): BelongsTo
     {
         return $this->belongsTo(Guru::class, 'wali_kelas', 'id_guru');
     }
