@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
@@ -10,8 +9,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+});
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('kelas', KelasController::class);
+        Route::resource('siswa', SiswaController::class);
+        Route::resource('guru', GuruController::class);
+        Route::resource('mata-pelajaran', MataPelajaranController::class);
+    });
+
+    Route::middleware('role:guru')->group(function () {
+        // Route khusus guru
+    });
+
+    Route::middleware('role:siswa')->group(function () {
+        // Route khusus siswa
+    });
+});
