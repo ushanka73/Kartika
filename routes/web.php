@@ -24,4 +24,8 @@ route::get('/jadwal',[JadwalController::class, 'index'])->name('jadwal');
 
 route::get('/materi',[MateriController::class, 'index'])->name('materi');
 
-route::get('/nilai',[NilaiController::class,'index'])->name('nilai');
+route::get('/nilai',[NilaiController::class,'siswa'])->name('nilai');
+Route::prefix('guru')->name('guru.')->group(function () {
+    Route::resource('nilai', NilaiController::class)->only(['index', 'store', 'update', 'destroy']);
+});
+
