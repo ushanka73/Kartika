@@ -1,9 +1,9 @@
 @php
     $menu = [
         ['label' => 'Dashboard',  'href' => route('dashboard'), 'active' => request()->routeIs('dashboard')],
-        ['label' => 'Jadwal',     'href' => '#', 'active' => false],
-        ['label' => 'Materi',     'href' => '#', 'active' => false],
-        ['label' => 'Nilai',      'href' => '#', 'active' => false],
+        ['label' => 'Jadwal',     'href' => route('jadwal'), 'active' => request()->routeIs('jadwal')],
+        ['label' => 'Materi',     'href' => route('materi'), 'active' => request()->routeIs('materi')],
+        ['label' => 'Nilai',      'href' => route('nilai'), 'active' => request()->routeIs('nilai')],
         ['label' => 'Pengumuman', 'href' => route('pengumuman.index'), 'active' => request()->routeIs('pengumuman')],
         ['label' => 'Keluhan',    'href' => '#', 'active' => false],
     ];

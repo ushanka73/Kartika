@@ -25,11 +25,11 @@
                 <p class="text-xl font-bold text-gray-500">Keluhan</p>
                 <p class="mt-2 text-3xl font-bold text-rose-600 text-right">1</p>
             </div>
+        </section>
+
         @include('components.pengumuman')
         @include('components.kalender')
         @include('components.jadwal')
-        </section>
-
     </div>
     @include('components.footer')
 </main>

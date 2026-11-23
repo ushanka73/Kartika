@@ -15,6 +15,9 @@
             <main class="flex flex-col">
                 @yield('dashboard')
                 @yield('profile')
+                @yield('jadwal')
+                @yield('materi')
+                @yield('nilai')
                 @yield('pengumuman')
             </main>
         </div>
