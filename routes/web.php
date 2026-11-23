@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('mata-pelajaran', MataPelajaranController::class);
     });
 
+Route::resource('pengumuman', PengumumanController::class);
     Route::middleware('role:guru')->group(function () {
         // Route khusus guru
     });

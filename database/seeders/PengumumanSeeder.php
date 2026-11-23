@@ -23,7 +23,7 @@ class PengumumanSeeder extends Seeder
                 'judul' => 'Libur Nasional',
                 'isi' => 'Kegiatan belajar mengajar diliburkan sesuai kalender akademik pada hari libur nasional.',
                 'id_user' => $admin,
-                'tanggal_kadaluarsa' => null,
+                'tanggal_kadaluarsa' => now()->addMonth(),
             ],
             [
                 'judul' => 'Pengumpulan Tugas Matematika',
