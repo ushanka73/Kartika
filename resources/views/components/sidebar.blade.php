@@ -4,7 +4,7 @@
         ['label' => 'Jadwal',     'href' => route('jadwal'), 'active' => request()->routeIs('jadwal')],
         ['label' => 'Materi',     'href' => route('materi'), 'active' => request()->routeIs('materi')],
         ['label' => 'Nilai',      'href' => route('nilai'), 'active' => request()->routeIs('nilai')],
-        ['label' => 'Pengumuman', 'href' => '#', 'active' => false],
+        ['label' => 'Pengumuman', 'href' => route('pengumuman.index'), 'active' => request()->routeIs('pengumuman')],
         ['label' => 'Keluhan',    'href' => '#', 'active' => false],
     ];
 @endphp

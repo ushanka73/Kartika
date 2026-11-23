@@ -18,6 +18,7 @@
                 @yield('jadwal')
                 @yield('materi')
                 @yield('nilai')
+                @yield('pengumuman')
             </main>
         </div>
     </div>
