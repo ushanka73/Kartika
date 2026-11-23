@@ -15,6 +15,7 @@
             <main class="flex flex-col">
                 @yield('dashboard')
                 @yield('profile')
+                @yield('pengumuman')
             </main>
         </div>
     </div>

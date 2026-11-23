@@ -6,5 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pengumuman extends Model
 {
-    //
+    protected $table = 'pengumumen';
+    protected $primaryKey = 'id_pengumuman';
+
+    protected $fillable = [
+        'judul',
+        'isi',
+        'id_user',
+        'tanggal_posting',
+        'tanggal_kadaluarsa',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
 }

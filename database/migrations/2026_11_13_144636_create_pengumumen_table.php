@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('isi');
             $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
             $table->timestamp('tanggal_posting')->useCurrent();
-            $table->timestamp('tanggal_kadaluarsa')->nullable();
+            $table->timestamp('tanggal_kadaluarsa');
             $table->timestamps();
         });
     }
