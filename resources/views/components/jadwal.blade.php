@@ -6,29 +6,33 @@
                 <tr class="border-b text-gray-500">
                     <th class="py-3 pr-4 font-bold">Jam</th>
                     <th class="py-3 pr-4 font-bold">Mata pelajaran</th>
-                    <th class="py-3 pr-4 font-bold">Kelas</th>
-                    <th class="py-3 font-bold">Ruang</th>
+                    @if (auth()->user()->role === 'siswa')
+                        <th class="py-3 pr-4 font-bold">Guru</th>
+                    @else
+                        <th class="py-3 pr-4 font-bold">Kelas</th>
+                    @endif
+                        <th class="py-3 font-bold">Ruang</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-b">
-                    <td class="py-3 pr-4 whitespace-nowrap">07:00 – 08:30</td>
-                    <td class="py-3 pr-4">Matematika</td>
-                    <td class="py-3 pr-4">X IPA</td>
-                    <td class="py-3">R-101</td>
-                </tr>
-                <tr class="border-b">
-                    <td class="py-3 pr-4 whitespace-nowrap">08:30 – 10:00</td>
-                    <td class="py-3 pr-4">Matematika</td>
-                    <td class="py-3 pr-4">XI IPS</td>
-                    <td class="py-3">R-201</td>
-                </tr>
-                <tr>
-                    <td class="py-3 pr-4 whitespace-nowrap">10:15 – 11:45</td>
-                    <td class="py-3 pr-4">Fisika</td>
-                    <td class="py-3 pr-4">X IPA</td>
-                    <td class="py-3">Lab Fisika</td>
-                </tr>
+                @forelse ($jadwalPerHari->get($hariIni, collect()) as $j)
+                    <tr @class(['border-b' => ! $loop->last])>
+                        <td class="py-3 pr-4 whitespace-nowrap">
+                            {{ substr($j->jam_mulai, 0, 5) }} – {{ substr($j->jam_selesai, 0, 5) }}
+                        </td>
+                        <td class="py-3 pr-4">{{ $j->mataPelajaran->nama_mapel }}</td>
+                        @if (auth()->user()->role === 'siswa')
+                            <td class="py-3 pr-4">{{ $j->guru->nama_lengkap }}</td>
+                        @else
+                            <td class="py-3 pr-4">{{ $j->kelas->tingkat }} {{ $j->kelas->jurusan }}</td>
+                        @endif
+                            <td class="py-3">{{ $j->ruang }}</td>
+                    </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="py-6 text-center text-gray-400">Tidak ada jadwal hari ini</td>
+                        </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

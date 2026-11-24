@@ -10,7 +10,11 @@ class NilaiController extends Controller
 {
     public function index(Request $request)
     {
-        $idGuru = 1;
+        if (auth()->user()->role === 'siswa') {
+            return $this->siswa($request);
+        }
+
+        $idGuru = auth()->user()->guru->id_guru;
 
         $query = NilaiAkhir::with(['siswa', 'kelas', 'mataPelajaran'])
             ->where('id_guru', $idGuru)
@@ -38,13 +42,16 @@ class NilaiController extends Controller
             ->orderBy('siswas.nama_lengkap')
             ->get();
 
-        $peran = 'guru';
+        $peran    = 'guru';
+        $semester = $request->input('semester', 'Ganjil');
 
-        return view('nilai', compact('peran', 'nilaiList', 'kelasList', 'siswaList', 'mapelList'));
+        return view('nilai', compact('peran', 'semester', 'nilaiList', 'kelasList', 'siswaList', 'mapelList'));
     }
 
     public function store(Request $request)
     {
+        $idGuru = auth()->user()->guru->id_guru;
+
         $request->validate([
             'id_siswa'     => 'required|exists:siswas,id_siswa',
             'id_mapel'     => 'required|exists:mata_pelajarans,id_mapel',
@@ -85,7 +92,7 @@ class NilaiController extends Controller
         NilaiAkhir::create([
             'id_siswa'     => $request->id_siswa,
             'id_mapel'     => $request->id_mapel,
-            'id_guru'      => 1,
+            'id_guru'      => $idGuru,
             'id_kelas'     => $idKelas,
             'semester'     => $request->semester,
             'tahun_ajaran' => $request->tahun_ajaran,
@@ -99,6 +106,9 @@ class NilaiController extends Controller
 
     public function update(Request $request, NilaiAkhir $nilai)
     {
+        if ($nilai->id_guru != auth()->user()->guru->id_guru) {
+            abort(403, 'Ini bukan nilai yang Anda input.');
+        }
         $request->validate([
             'id_siswa'     => 'required|exists:siswas,id_siswa',
             'id_mapel'     => 'required|exists:mata_pelajarans,id_mapel',
@@ -154,13 +164,26 @@ class NilaiController extends Controller
 
     public function destroy(NilaiAkhir $nilai)
     {
+        if ($nilai->id_guru != auth()->user()->guru->id_guru) {
+            abort(403, 'Ini bukan nilai yang Anda input.');
+        }
         $nilai->delete();
 
         return back()->with('sukses', 'Nilai berhasil dihapus.');
     }
 
-    public function siswa()
+    public function siswa(Request $request)
     {
-        return view('nilai', ['peran' => 'siswa']);
+        $siswa    = auth()->user()->siswa;
+        $semester = $request->input('semester', 'Ganjil');
+
+        $nilaiList = NilaiAkhir::with('mataPelajaran', 'guru')
+            ->where('id_siswa', $siswa->id_siswa)
+            ->where('semester', $semester)
+            ->get();
+
+        $peran = 'siswa';
+
+        return view('nilai', compact('peran', 'siswa', 'semester', 'nilaiList'));
     }
 }

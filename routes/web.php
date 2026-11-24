@@ -15,6 +15,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\MataPelajaranController;
+use GuzzleHttp\Middleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,23 +32,28 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/jadwal',[JadwalController::class, 'index'])->name('jadwal');
     Route::get('/materi',[MateriController::class, 'index'])->name('materi');
-  
+
     Route::middleware('role:admin')->group(function () {
         //role khusus admin
         Route::resource('kelas', KelasController::class);
         Route::resource('siswa', SiswaController::class);
         Route::resource('guru', GuruController::class);
         Route::resource('mata-pelajaran', MataPelajaranController::class);
+        Route::resource('jadwal',JadwalController::class)-> only(['store','update','destroy']);
     });
-  
+    Route::get('/nilai',[NilaiController::class, 'index'])
+    -> middleware('role:guru,siswa')
+    ->name('nilai');
+
+
     Route::middleware('role:guru')->group(function () {
             // Route khusus guru
         Route::resource('pengumuman', PengumumanController::class);
-        Route::resource('nilai', NilaiController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('nilai', NilaiController::class)->only(['store', 'update', 'destroy']);
+        Route::resource('materi', MateriController::class)->only(['store', 'update', 'destroy']);
     });
 
     Route::middleware('role:siswa')->group(function () {
             // Route khusus siswa
-        Route::get('/nilai',[NilaiController::class,'siswa'])->name('nilai');
-    });  
+    });
 });

@@ -42,12 +42,12 @@
                         <td class="py-3">
                             <div class="flex justify-center gap-2">
                                 <button type="button"
-                                        onclick="bukaEdit('{{ route('guru.nilai.update', $n) }}', '{{ $n->id_siswa }}', '{{ $n->id_mapel }}', '{{ $n->semester }}', '{{ $n->tahun_ajaran }}', '{{ $n->nilai_akhir }}')"
+                                        onclick="bukaEdit('{{ route('nilai.update', $n) }}', '{{ $n->id_siswa }}', '{{ $n->id_mapel }}', '{{ $n->semester }}', '{{ $n->tahun_ajaran }}', '{{ $n->nilai_akhir }}')"
                                         class="rounded-full bg-rose-500 border border-rose-300 px-3 py-1 text-xs font-bold text-white hover:bg-amber-50 hover:text-rose-500    ">
                                     Edit
                                 </button>
                                 <button type="button"
-                                        onclick="bukaHapus('{{ route('guru.nilai.destroy', $n) }}', '{{ $n->siswa->nama_lengkap }}')"
+                                        onclick="bukaHapus('{{ route('nilai.destroy', $n) }}', '{{ $n->siswa->nama_lengkap }}')"
                                         class="rounded-full border border-red-300 px-3 py-1 text-xs font-bold text-red-600 hover:bg-red-50">
                                     Hapus
                                 </button>
@@ -69,7 +69,7 @@
 
         <h3 id="judul-modal" class="mb-4 text-xl font-bold">Tambah Nilai</h3>
 
-        <form id="form-nilai" method="POST" action="{{ route('guru.nilai.store') }}">
+        <form id="form-nilai" method="POST" action="{{ route('nilai.store') }}">
             @csrf
 
             <input type="hidden" name="_method" id="input-method" value="POST">
@@ -162,7 +162,7 @@
 
     function bukaTambah() {
         document.getElementById('judul-modal').innerText  = 'Tambah Nilai';
-        document.getElementById('form-nilai').action      = '{{ route('guru.nilai.store') }}';
+        document.getElementById('form-nilai').action      = '{{ route('nilai.store') }}';
         document.getElementById('input-method').value     = 'POST';
         document.getElementById('input-mode').value       = 'tambah';
         document.getElementById('input-url-edit').value   = '';

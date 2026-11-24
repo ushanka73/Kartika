@@ -34,4 +34,24 @@ class Jadwal extends Model
     {
         return $this->belongsTo(Guru::class, 'id_guru', 'id_guru');
     }
+    public static function hariIni()
+    {
+        $namaHari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        $hariIni = $namaHari[now('Asia/Jakarta')->dayOfWeek];
+        return $hariIni;
+    }
+
+    public static function milikUser($user)
+    {
+        $query = Jadwal::with('mataPelajaran','kelas','guru')
+            ->orderBy('jam_mulai');
+
+        if ($user->role === 'guru') {
+        $query->where('id_guru', $user->guru->id_guru);
+        } elseif ($user->role === 'siswa') {
+            $query->where('id_kelas', $user->siswa->id_kelas);
+        }
+
+        return $query->get()->groupBy('hari');
+    }
 }
