@@ -23,6 +23,9 @@ class NilaiController extends Controller
         if ($request->kelas) {
             $query->where('id_kelas', $request->kelas);
         }
+        if ($request->mapel) {
+            $query->where('id_mapel', $request->mapel);
+        }
 
         if ($request->cari) {
             $idSiswa = DB::table('siswas')
@@ -182,8 +185,16 @@ class NilaiController extends Controller
             ->where('semester', $semester)
             ->get();
 
+        $ringkasan = [
+            'rata_rata'    => $nilaiList->avg('nilai_akhir') ?? 0,
+            'jumlah_mapel' => $nilaiList->count(),
+            'tuntas'       => $nilaiList->filter(fn ($n) => $n->nilai_akhir >= $n->mataPelajaran->kkm)->count(),
+        ];
+
+        $ringkasan['belum_tuntas'] = $ringkasan['jumlah_mapel'] - $ringkasan['tuntas'];
+
         $peran = 'siswa';
 
-        return view('nilai', compact('peran', 'siswa', 'semester', 'nilaiList'));
+        return view('nilai', compact('peran', 'siswa', 'semester', 'nilaiList','ringkasan'));
     }
 }

@@ -13,10 +13,10 @@ class NilaiAkhirSeeder extends Seeder
         $siswas = DB::table('siswas')->get();
 
         foreach ($siswas as $siswa) {
-            // Nilai untuk setiap mapel yang dijadwalkan di kelas siswa tersebut.
             $jadwals = DB::table('jadwals')->where('id_kelas', $siswa->id_kelas)->get();
-
+            
             foreach ($jadwals as $jadwal) {
+                foreach (['Ganjil','Genap'] as $smester){
                 $nilai = rand(60, 98);
 
                 DB::table('nilai_akhirs')->insert([
@@ -24,7 +24,7 @@ class NilaiAkhirSeeder extends Seeder
                     'id_mapel' => $jadwal->id_mapel,
                     'id_guru' => $jadwal->id_guru,
                     'id_kelas' => $siswa->id_kelas,
-                    'semester' => 'Ganjil',
+                    'semester' => $smester,
                     'tahun_ajaran' => '2026/2027',
                     'nilai_akhir' => $nilai,
                     'keterangan' => $nilai >= $kkm[$jadwal->id_mapel] ? 'Tuntas' : 'Belum Tuntas',
@@ -32,6 +32,7 @@ class NilaiAkhirSeeder extends Seeder
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+                }
             }
         }
     }

@@ -16,6 +16,41 @@
         </button>
     </div>
     @include('partials.nilai-smester')
+        <form method="GET" action="{{ route('nilai') }}" class="mb-4 flex flex-wrap gap-2 px-1">
+        <input type="hidden" name="semester" value="{{ $semester }}">
+
+        <select name="kelas" class="rounded-full border border-rose-300 px-4 py-1.5 text-sm">
+            <option value="">Semua kelas</option>
+            @foreach ($kelasList as $k)
+                <option value="{{ $k->id_kelas }}" @selected(request('kelas') == $k->id_kelas)>
+                    {{ $k->tingkat }} {{ $k->jurusan }}
+                </option>
+            @endforeach
+        </select>
+
+        <select name="mapel" class="rounded-full border border-rose-300 px-4 py-1.5 text-sm">
+            <option value="">Semua mapel</option>
+            @foreach ($mapelList as $m)
+                <option value="{{ $m->id_mapel }}" @selected(request('mapel') == $m->id_mapel)>
+                    {{ $m->nama_mapel }}
+                </option>
+            @endforeach
+        </select>
+
+        <input type="text" name="cari" value="{{ request('cari') }}" placeholder="Cari nama siswa..."
+               class="rounded-full border border-rose-300 px-4 py-1.5 text-sm">
+
+        <button type="submit" class="rounded-full bg-rose-600 px-4 py-1.5 text-sm font-bold text-white hover:bg-rose-700">
+            Filter
+        </button>
+
+        @if (request('kelas') || request('mapel') || request('cari'))
+            <a href="{{ route('nilai', ['semester' => $semester]) }}"
+               class="rounded-full border border-rose-300 px-4 py-1.5 text-sm text-rose-700 hover:bg-rose-50">
+                Reset
+            </a>
+        @endif
+    </form> 
 
     <div class="overflow-x-auto rounded-3xl bg-white p-6 shadow-md">
         <table class="w-full text-left text-sm">
